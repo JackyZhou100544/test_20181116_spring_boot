@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+
+    <!--文件输出格式-->
+    <property name="PATTERN" value="%-4relative [%thread] %-5level %logger{35} - %msg %n"></property>
+    <!--test 文件路径-->
+    <property name="TEST_FILE_PATH" value="c:/cpt/roncoo/logs"></property>
+    <!--pro 文件路径-->
+    <property name="PRO_FILE_PATH" value="/opt/roncoo/logs"></property>
+
+    <!--开发环境-->
+    <springProfile name="dev">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+               <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+        <logger name="com.example.demo" level="debug"></logger>
+        <root level="info">
+          <appender-ref ref="CONSOLE"></appender-ref>
+        </root>
+    </springProfile>
+
+    <!--测试环境-->
+    <springProfile name="test">
+        <appender name="TEST-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--文件路径-->
+            <file>${TEST_FILE_PATH}</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--文件名称-->
+                <fileNamePattern>${TEST_FILE_PATH}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <!--文件最大保存历史数量-->
+                <MaxHistory>100</MaxHistory>
+            </rollingPolicy>
+
+           <layout class="ch.qos.logback.classic.PatternLayout">
+               <pattern>${PATTERN}</pattern>
+           </layout>
+        </appender>
+
+        <root level="info">
+            <appender-ref ref="TEST-FILE"></appender-ref>
+        </root>
+    </springProfile>
+
+    <!--生产环境-->
+    <springProfile name="prod">
+        <appender name="PROD-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--文件路径-->
+            <file>${PRO_FILE_PATH}</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <!--文件名称-->
+                <fileNamePattern>${PRO_FILE_PATH}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <!--文件最大保存历史数量-->
+                <MaxHistory>100</MaxHistory>
+            </rollingPolicy>
+
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>${PATTERN}</pattern>
+            </layout>
+        </appender>
+
+        <root level="info">
+            <appender-ref ref="PROD-FILE"></appender-ref>
+        </root>
+    </springProfile>
+    ​
+</configuration>

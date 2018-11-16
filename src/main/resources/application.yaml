@@ -1,0 +1,46 @@
+
+server:
+    port: 8090
+
+spring:
+   profiles:
+          active: dev
+   jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+   mvc:
+      view:
+        prefix: /WEB-INF/templates/
+        suffix: .jsp
+
+
+roncoo:
+    secret: ${random.value}
+    number: ${random.int}
+
+
+
+
+---
+spring:
+    profiles: dev
+
+server:
+    port: 8080
+
+
+
+
+---
+spring:
+    profiles: pro
+
+server:
+    port: 8081
+
+
+---
+spring:
+    profiles: test
+
+server:
+    port: 8082
